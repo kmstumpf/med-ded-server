@@ -30,11 +30,7 @@ app.use(function(req, res, next) {
   next();
 });
 
-//get lastest replays, new replay
-app.route('/')
-    .get(function(req, res) {
-        return res.send("Hi");
-    });
+app.use(express.static('public'));
 
 //get lastest replays, new replay
 app.route('/alarms')
