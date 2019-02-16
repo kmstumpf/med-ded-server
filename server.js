@@ -22,7 +22,7 @@ app.route('/alarms')
     .post(function(req, res) {
         console.log(req.body.alarmTime);
         var request = new Request(
-            "INSERT INTO ALARMS (ALARMTIME) VALUES '" + req.body.alarmTime + "'",
+            "INSERT INTO DBO.ALARMS (ALARMTIME) VALUES ('" + req.body.alarmTime + "')",
             function(err, rowCount, rows)
             {
                 console.log(rows);
