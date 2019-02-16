@@ -11,7 +11,7 @@ var config =
 {
     userName: 'your_username', // update me
     password: 'your_password', // update me
-    server: 'your_server.database.windows.net', // update me
+    server: 'brains.database.windows.net', // update me
     options:
     {
         database: 'your_database', //update me
@@ -35,7 +35,7 @@ app.use(express.static('public'));
 //get lastest replays, new replay
 app.route('/alarms')
     .get(function(req, res) {
-        return res.send("Hi");
+        return res.send(process.env.db);
     });
 
 app.listen(port);
