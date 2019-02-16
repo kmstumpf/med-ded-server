@@ -36,7 +36,15 @@ app.use(express.static('public'));
 //get lastest replays, new replay
 app.route('/alarms')
     .get(function(req, res) {
-        return res.send(process.env.db);
+        var request = new Request(
+            "SELECT * FROM Alarms",
+            function(err, rowCount, rows)
+            {
+                if (err) return res.send(err);
+                return res.send(rows);
+                process.exit();
+            }
+        );
     });
 
 app.listen(port);
