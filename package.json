@@ -10,6 +10,9 @@
     "type": "git",
     "url": "git+https://github.com/kmstumpf/med-ded-server.git"
   },
+  "engines": {
+    "node": "10.13.0"
+},
   "author": "",
   "license": "ISC",
   "bugs": {
