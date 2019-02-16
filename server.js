@@ -41,6 +41,29 @@ app.route('/alarms')
         connect(request);
     });
 
+app.route('/events')
+    .get(function(req, res) {
+        var request = new Request(
+            "SELECT * FROM EVENTS",
+            function(err, rowCount, rows)
+            {
+                console.log(rows);
+            }
+        );
+        request.on('doneInProc', function (rowCount, more, rows) {
+            var jsonArray = [];
+            rows.forEach(function (columns) {
+                var rowObject ={};
+                columns.forEach(function(column) {
+                    rowObject[column.metadata.colName] = column.value;
+                });
+                jsonArray.push(rowObject);
+            });
+            return res.json(jsonArray);
+        });
+        connect(request);
+    });
+
 app.listen(port);
 
 function connect(request) {
