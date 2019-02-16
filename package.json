@@ -1,0 +1,25 @@
+{
+  "name": "med-ded-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmstumpf/med-ded-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmstumpf/med-ded-server/issues"
+  },
+  "homepage": "https://github.com/kmstumpf/med-ded-server#readme",
+  "dependencies": {
+    "async": "^2.6.2",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "tedious": "^5.0.3"
+  }
+}
