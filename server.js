@@ -21,26 +21,15 @@ app.use(express.static('public'));
 app.route('/alarms')
     .post(function(req, res) {
         console.log(req.body.alarmTime);
-        res.send("test");
-        // var request = new Request(
-        //     "SELECT * FROM Alarms",
-        //     function(err, rowCount, rows)
-        //     {
-        //         console.log(rows);
-        //     }
-        // );
-        // request.on('doneInProc', function (rowCount, more, rows) {
-        //     var jsonArray = [];
-        //     rows.forEach(function (columns) {
-        //         var rowObject ={};
-        //         columns.forEach(function(column) {
-        //             rowObject[column.metadata.colName] = column.value;
-        //         });
-        //         jsonArray.push(rowObject);
-        //     });
-        //     return res.json(jsonArray);
-        // });
-        // connect(request);
+        var request = new Request(
+            "INSERT INTO ALARMS (ALARMTIME) VALUES " + req.body.alarmTime,
+            function(err, rowCount, rows)
+            {
+                console.log(rows);
+            }
+        );
+        connect(request);
+        return res.send("Done");
     })
     .get(function(req, res) {
         var request = new Request(
