@@ -20,7 +20,7 @@ app.use(express.static('public'));
 
 app.route('/alarms')
     .post(function(req, res) {
-        console.log(req,body.alarmTime);
+        console.log(req.body.alarmTime);
         res.send("test");
         // var request = new Request(
         //     "SELECT * FROM Alarms",
