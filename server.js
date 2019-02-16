@@ -53,6 +53,20 @@ app.route('/alarms')
         connect(request);
     });
 
+app.route('/alarms/del')
+    .post(function(req, res) {
+        console.log(req.body.alarmTime);
+        var request = new Request(
+            "DELETE FROM DBO.ALARMS WHERE ALARMTIME = '" + req.body.alarmTime + "'",
+            function(err, rowCount, rows)
+            {
+                console.log(rows);
+            }
+        );
+        connect(request);
+        return res.send("Done");
+    });
+
 app.route('/events')
     .get(function(req, res) {
         var request = new Request(
