@@ -9,16 +9,17 @@ var port = process.env.PORT || 1337;
 // Create connection to database
 var config =
 {
-    userName: 'your_username', // update me
-    password: 'your_password', // update me
-    server: 'brains.database.windows.net', // update me
+    userName: process.env.user, // update me
+    password: process.env.pass, // update me
+    server: process.env.db, // update me
     options:
     {
         database: 'your_database', //update me
         encrypt: true
     }
 }
-//var connection = new Connection(config);
+
+var connection = new Connection(config);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
