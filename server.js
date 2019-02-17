@@ -76,7 +76,7 @@ app.route('/alarms/del')
 app.route('/events')
     .get(function(req, res) {
         var request = new Request(
-            "SELECT TOP(25) * FROM EVENTS ORDER BY EVENTTIME",
+            "SELECT TOP(25) * FROM EVENTS ORDER BY EVENTTIME DESC",
             function(err, rowCount, rows)
             {
                 console.log(rows);
