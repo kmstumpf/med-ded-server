@@ -76,7 +76,7 @@ app.route('/alarms/del')
 app.route('/events')
     .get(function(req, res) {
         var request = new Request(
-            "SELECT DISTINCT TOP(25) * FROM EVENTS ORDER BY EVENTTIME DESC",
+            "select distinct val, format(eventtime,'hh:mm yyyy-MM-dd') as et, why from events order by et desc",
             function(err, rowCount, rows)
             {
                 console.log(rows);
@@ -87,10 +87,6 @@ app.route('/events')
             rows.forEach(function (columns) {
                 var rowObject ={};
                 columns.forEach(function(column) {
-                    if (column.metadata.colName.toLowerCase() == "eventtime") {
-                        var t = moment(column.value);
-                        column.value = t.tz('America/Toronto').format('hh:mm YYYY-MM-DD');
-                    }
                     rowObject[column.metadata.colName] = column.value;
                 });
                 jsonArray.push(rowObject);
