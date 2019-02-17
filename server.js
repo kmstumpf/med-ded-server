@@ -179,5 +179,5 @@ function poll() {
         });
         connect(request);
         poll();
-    }, 600);
+    }, 60000);
 }
