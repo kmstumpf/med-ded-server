@@ -4,7 +4,65 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 
+//polling functions
+
+function getTime() {
+    var time = new Date(Date.now());
+    var hours = time.getHours();
+    var minutes = time.getMinutes();
+    var hString = hours.toString();
+    var mString = minutes.toString();
+    if (hours < 10){
+        hString = "0" + hours.toString();
+    }
+    if (minutes < 10) {
+        mString = "0" + minutes.toString();
+    }
+    return hString + ":" + mString;
+}
+
+function poll() {
+    setTimeout(function() {
+        var request = new Request(
+            "SELECT * FROM Alarms",
+            function(err, rowCount, rows)
+            {
+                console.log(rows);
+            }
+        );
+        request.on('doneInProc', function (rowCount, more, rows) {
+            var jsonArray = [];
+            rows.forEach(function (columns) {
+                var rowObject ={};
+                columns.forEach(function(column) {
+                    rowObject[column.metadata.colName] = column.value;
+                });
+                jsonArray.push(rowObject);
+            });
+            jsonArray.forEach((elem) => {
+                if (elem.alarmTime == getTime()) {
+                    console.log("MSG");
+                    client.messages.create(
+                        {
+                          to: process.env.myNum,
+                          from: process.env.twilioNum,
+                          body: 'Take your drugs!',
+                        },
+                        (err, message) => {
+                          console.log(message.sid);
+                        }
+                      );
+                }
+            });
+        });
+        connect(request);
+        poll();
+    }, 60000);
+}
+
 if (process.env.ENVIRO != "PROD") require('dotenv').config();
+
+const client = require('twilio')(process.env.twilioSID, process.env.twilioAuth);
 
 var port = process.env.PORT || 1337;
 
@@ -17,6 +75,8 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static('public'));
+
+poll();
 
 app.route('/alarms')
     .post(function(req, res) {
