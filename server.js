@@ -160,6 +160,7 @@ function poll() {
                 jsonArray.push(rowObject);
             });
             console.log(getTime());
+            console.log(new Date().getTimezoneOffset());
             jsonArray.forEach((elem) => {
                 if (elem.alarmTime == getTime()) {
                     client.messages.create(
