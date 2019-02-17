@@ -88,8 +88,8 @@ app.route('/events')
                 columns.forEach(function(column) {
                     if (column.metadata.colName.toLowerCase() == "eventtime") {
                         var shiftTime = new DateTime(column.value);
-                        console.log(shiftTime);
                         shiftTime.setZone('America/Toronto');
+                        console.log(shiftTime);
                         var month = shiftTime.month.toString();
                         var day = shiftTime.day.toString();
                         var hours = shiftTime.hour.toString();
