@@ -86,6 +86,27 @@ app.route('/events')
             rows.forEach(function (columns) {
                 var rowObject ={};
                 columns.forEach(function(column) {
+                    if (column.metadata.colName.toLowerCase() == "eventtime") {
+                        var shiftTime = new DateTime(column.value);
+                        shiftTime.setZone('America/Toronto');
+                        var month = shiftTime.month.toString();
+                        var day = shiftTime.day.toString();
+                        var hours = shiftTime.hour.toString();
+                        var min = shiftTime.minute.toString();
+                        if (shiftTime.month < 10) {
+                            month = "0" + shiftTime.month.toString();
+                        }
+                        if (shiftTime.day < 10) {
+                            day = "0" + shiftTime.day.toString();
+                        }
+                        if (shiftTime.hour < 10) {
+                            hours = "0" + shiftTime.hour.toString();
+                        }
+                        if (shiftTime.minute < 10) {
+                            min = "0" + shiftTime.minute.toString();
+                        }
+                        column.value = hours + ":" + min + " " + shiftTime.year.toString() + "-" + month + "-" + day;
+                    }
                     rowObject[column.metadata.colName] = column.value;
                 });
                 jsonArray.push(rowObject);
