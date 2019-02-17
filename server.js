@@ -3,6 +3,7 @@ var Request = require('tedious').Request;
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
+var time = require('time')(Date);
 
 if (process.env.ENVIRO != "PROD") require('dotenv').config();
 
@@ -127,9 +128,10 @@ function connect(request) {
 //polling functions
 
 function getTime() {
-    var time = new Date(Date.now());
-    var hours = time.getHours();
-    var minutes = time.getMinutes();
+    var now = new Date();
+    now.setTimezone('EST');
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
     var hString = hours.toString();
     var mString = minutes.toString();
     if (hours < 10){
@@ -160,7 +162,6 @@ function poll() {
                 jsonArray.push(rowObject);
             });
             console.log(getTime());
-            console.log(new Date().getTimezoneOffset());
             jsonArray.forEach((elem) => {
                 if (elem.alarmTime == getTime()) {
                     client.messages.create(
@@ -178,5 +179,5 @@ function poll() {
         });
         connect(request);
         poll();
-    }, 60000);
+    }, 600);
 }
