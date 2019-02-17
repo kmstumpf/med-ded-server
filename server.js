@@ -3,7 +3,7 @@ var Request = require('tedious').Request;
 var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
-var time = require('time')(Date);
+const { DateTime } = require("luxon");
 
 if (process.env.ENVIRO != "PROD") require('dotenv').config();
 
@@ -128,10 +128,9 @@ function connect(request) {
 //polling functions
 
 function getTime() {
-    var now = new Date();
-    now.setTimezone('EST');
-    var hours = now.getHours();
-    var minutes = now.getMinutes();
+    var now = DateTime.local().setZone('America/Toronto');
+    var hours = now.hour;
+    var minutes = now.minute;
     var hString = hours.toString();
     var mString = minutes.toString();
     if (hours < 10){
