@@ -172,7 +172,7 @@ function poll() {
                         {
                           to: process.env.myNum,
                           from: process.env.twilioNum,
-                          body: 'Take your drugs!',
+                          body: 'Reminder to take your medication!',
                         },
                         (err, message) => {
                           console.log(message.sid);
